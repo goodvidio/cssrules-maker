@@ -8,11 +8,11 @@ var output = process.argv.slice(2)[1];
 
 if (input && output) {
     var css = fs.readFileSync(input, 'utf8');
-    var result = '';
+    var result = 'define(function () { return function (module) {';
 
     var contenter = postcss(function (css) {
         css.eachRule(function (rule) {
-            result += "this.insertRule('" + rule.selector + "', '";
+            result += "module.insertRule('" + rule.selector + "', '";
 
             for (var i = 0; i < rule.childs.length; i++) {
                 result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
@@ -21,6 +21,8 @@ if (input && output) {
             result += "');";
         });
     });
+
+    result += '}});';
 
     contenter.process(css).css;
 

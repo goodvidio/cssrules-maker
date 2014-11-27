@@ -1,6 +1,6 @@
 {
   "name": "cssrules",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Takes a css file as input, tokenizes it and generates CSS rules in a separate JavaScript file",
   "main": "app.js",
   "scripts": {
