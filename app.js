@@ -8,9 +8,11 @@ var output = process.argv.slice(2)[1];
 
 if (input && output) {
     var css = fs.readFileSync(input, 'utf8');
-    var result = 'define(function () { return function (module) {';
+    var result;
 
     var contenter = postcss(function (css) {
+        result = 'define(function () { return function (module) {';
+
         css.eachRule(function (rule) {
             result += "module.insertRule('" + rule.selector + "', '";
 
@@ -20,11 +22,12 @@ if (input && output) {
 
             result += "');";
         });
+
+       result += '}});';
     });
 
-    result += '}});';
-
     contenter.process(css).css;
+
 
     result = result.replace(/(\r\n|\n|\r)/gm,"");
 
