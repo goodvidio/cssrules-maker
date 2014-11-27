@@ -1,4 +1,4 @@
 cssrules-maker
 ==============
 
-Take a css file as input,  tokenize it and generator CSS rules in a separate JavaScript file
+Takes a css file as input, tokenizes it and generates CSS rules in a separate JavaScript file

@@ -1,7 +1,7 @@
 {
   "name": "cssrules",
   "version": "1.0.1",
-  "description": "",
+  "description": "Takes a css file as input, tokenizes it and generates CSS rules in a separate JavaScript file",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
