@@ -8,6 +8,7 @@
   },
   "author": "Goodvidio",
   "dependencies": {
-    "postcss": "^3.0.4"
+    "postcss": "^3.0.4",
+    "underscore": "~1.7.0"
   }
 }
