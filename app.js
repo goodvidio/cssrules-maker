@@ -2,6 +2,7 @@
 
 var postcss = require('postcss');
 var fs = require('fs');
+var _ = require('underscore');
 
 var input = process.argv.slice(2)[0];
 var output = process.argv.slice(2)[1];
@@ -13,7 +14,33 @@ if (input && output) {
     var contenter = postcss(function (css) {
         result = 'define(function () { return function (module) {';
 
-        css.eachRule(function (rule) {
+        css.eachAtRule(function (atrule, i) {
+            if (atrule.name === 'import') {
+
+                result += "module.injectRule('";
+                result += '@' + atrule.name + ' ' + atrule.params + ';';
+                result += "');";
+            } else if (atrule.name === 'media') {
+                if (atrule.childs) {
+                    _.each(atrule.childs, function (rule) {
+                        var temp = '@' + atrule.name + ' ' + atrule.params + '{' + rule.selector + '{';
+
+                        for (var i = 0; i < rule.childs.length; i++) {
+                            temp += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
+                        }
+
+                        temp += '}}';
+
+                        result += "module.injectRule('" + temp + "');";
+                    });
+                }
+            } else{
+                throw new Error('Unsupported atRule');
+            }
+        });
+
+
+        css.eachRule(function (rule, i) {
             result += "module.insertRule('" + rule.selector + "', '";
 
             for (var i = 0; i < rule.childs.length; i++) {
