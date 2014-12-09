@@ -39,7 +39,7 @@ if (input && output) {
                             temp += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
                         }
 
-                        temp += '}';
+                        temp += '}}';
 
                         result += "module.injectRule('" + temp + "');";
                     });
