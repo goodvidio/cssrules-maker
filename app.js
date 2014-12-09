@@ -14,6 +14,16 @@ if (input && output) {
     var contenter = postcss(function (css) {
         result = 'define(function () { return function (module) {';
 
+        css.eachRule(function (rule, i) {
+            result += "module.insertRule('" + rule.selector + "', '";
+
+            for (var i = 0; i < rule.childs.length; i++) {
+                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
+            }
+
+            result += "');";
+        });
+
         css.eachAtRule(function (atrule, i) {
             if (atrule.name === 'import') {
 
@@ -37,17 +47,6 @@ if (input && output) {
             } else{
                 throw new Error('Unsupported atRule');
             }
-        });
-
-
-        css.eachRule(function (rule, i) {
-            result += "module.insertRule('" + rule.selector + "', '";
-
-            for (var i = 0; i < rule.childs.length; i++) {
-                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
-            }
-
-            result += "');";
         });
 
        result += '}});';
