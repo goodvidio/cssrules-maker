@@ -29,7 +29,7 @@ if (input && output) {
                 result += "module.injectRule('@" + atrule.name + ' ' + atrule.params + ";');";
             } else if (atrule.name === 'media') {
                 if (atrule.childs) {
-                    result += "module.injectRule('@" + atrule.name + " " + atrule.params + "{" + rule.selector + "{}');";
+                    result += "module.injectRule('@" + atrule.name + " " + atrule.params + "{}');";
 
                     _.each(atrule.childs, function (rule) {
                         var temp = rule.selector + '{';
