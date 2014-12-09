@@ -31,7 +31,6 @@ if (input && output) {
                 result += "module.injectRule('@" + atrule.name + ' ' + atrule.params + ";');";
             } else if (atrule.name === 'media') {
                 if (atrule.childs) {
-                    result += "module.injectRule('@" + atrule.name + " " + atrule.params + "{}');";
 
                     _.each(atrule.childs, function (rule) {
                         var temp = "@" + atrule.name + " " + atrule.params + "{" + rule.selector + "{";
@@ -42,7 +41,7 @@ if (input && output) {
 
                         temp += '}';
 
-                        result += "module.injectMediaRule('" + temp + "');";
+                        result += "module.injectRule('" + temp + "');";
                     });
                 }
             } else{
