@@ -32,7 +32,7 @@ if (input && output) {
                     result += "module.injectRule('@" + atrule.name + " " + atrule.params + "{}');";
 
                     _.each(atrule.childs, function (rule) {
-                        var temp = rule.selector + '{';
+                        var temp = "@" + atrule.name + " " + atrule.params + "{" + rule.selector + "{";
 
                         for (var i = 0; i < rule.childs.length; i++) {
                             temp += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
