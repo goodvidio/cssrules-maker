@@ -14,34 +14,33 @@ if (input && output) {
     var contenter = postcss(function (css) {
         result = 'define(function () { return function (module) {';
 
-        css.eachRule(function (rule, i) {
+        css.eachRule(function (rule) {
             result += "module.insertRule('" + rule.selector + "', '";
 
             for (var i = 0; i < rule.childs.length; i++) {
-                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
+                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
             }
 
             result += "');";
         });
 
-        css.eachAtRule(function (atrule, i) {
+        css.eachAtRule(function (atrule) {
             if (atrule.name === 'import') {
-
-                result += "module.injectRule('";
-                result += '@' + atrule.name + ' ' + atrule.params + ';';
-                result += "');";
+                result += "module.injectRule('@" + atrule.name + ' ' + atrule.params + ";');";
             } else if (atrule.name === 'media') {
                 if (atrule.childs) {
+                    result += "module.injectRule('@" + atrule.name + " " + atrule.params + "{" + rule.selector + "{}');";
+
                     _.each(atrule.childs, function (rule) {
-                        var temp = '@' + atrule.name + ' ' + atrule.params + '{' + rule.selector + '{';
+                        var temp = rule.selector + '{';
 
                         for (var i = 0; i < rule.childs.length; i++) {
-                            temp += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';'
+                            temp += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
                         }
 
-                        temp += '}}';
+                        temp += '}';
 
-                        result += "module.injectRule('" + temp + "');";
+                        result += "module.injectMediaRule('" + temp + "');";
                     });
                 }
             } else{
