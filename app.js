@@ -15,13 +15,15 @@ if (input && output) {
         result = 'define(function () { return function (module) {';
 
         css.eachRule(function (rule) {
-            result += "module.insertRule('" + rule.selector + "', '";
+            if (rule.parent.type === 'root') {
+                result += "module.insertRule('" + rule.selector + "', '";
 
-            for (var i = 0; i < rule.childs.length; i++) {
-                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+                for (var i = 0; i < rule.childs.length; i++) {
+                    result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+                }
+
+                result += "');";
             }
-
-            result += "');";
         });
 
         css.eachAtRule(function (atrule) {
