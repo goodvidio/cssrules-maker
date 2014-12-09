@@ -27,7 +27,7 @@ if (input && output) {
         css.eachAtRule(function (atrule, i) {
             if (atrule.name === 'import') {
 
-                result += "module.injectMediaRule('";
+                result += "module.injectRule('";
                 result += '@' + atrule.name + ' ' + atrule.params + ';';
                 result += "');";
             } else if (atrule.name === 'media') {
@@ -41,7 +41,7 @@ if (input && output) {
 
                         temp += '}}';
 
-                        result += "module.injectMediaRule('" + temp + "');";
+                        result += "module.injectRule('" + temp + "');";
                     });
                 }
             } else{
