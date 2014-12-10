@@ -32,6 +32,8 @@ if (inputFile && outputFile) {
             result = parseImportAtRule(rule);
         } else if (rule.name === 'media') {
             result = parseMediaAtRule(rule);
+        } else if (rule.name === 'font-face') {
+            result = parseFontFaceAtRule(rule);
         } else{
             throw new Error('Unsupported atRule');
         }
@@ -65,6 +67,24 @@ if (inputFile && outputFile) {
                 result = "module.injectRule('" + result + "');";
             });
         }
+
+        return result;
+    };
+
+    parseFontFaceAtRule = function (rule) {
+        var result;
+
+        result = "@" + rule.name + "', '";
+
+        for (var i = 0; i < rule.childs.length; i++) {
+            if (rule.childs[i].prop === 'font-family') {
+                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value.split('\'').join('"') + ';';
+            } else {
+                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+            }
+        }
+
+        result = "module.insertRule('" + result + "');";
 
         return result;
     };
