@@ -59,7 +59,8 @@ if (inputFile && outputFile) {
                 result = query + rule.selector + "{";
 
                 for (var i = 0; i < rule.childs.length; i++) {
-                    result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+                    var important = rule.childs[i].important ? ' !important' : '';
+                    result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + important + ';';
                 }
 
                 result += '}}';
