@@ -124,7 +124,9 @@ if (inputFile && outputFile) {
             if (rule.childs[i].prop === 'font-family') {
                 result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value.split('\'').join('"') + ';';
             } else {
-                result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+                if (rule.childs[i].type !== 'comment') {
+                    result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
+                }
             }
         }
 
