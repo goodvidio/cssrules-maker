@@ -42,9 +42,44 @@ if (inputFile && outputFile) {
             result = parseMediaAtRule(rule);
         } else if (rule.name === 'font-face') {
             result = parseFontFaceAtRule(rule);
-        } else{
+        } else if (rule.name.slice(-9) === 'keyframes') {
+            result = parseKeyframesAtRule(rule);
+        } else {
             throw new Error('Unsupported atRule');
         }
+
+        return result;
+    };
+
+    parseKeyframesAtRule = function (rule) {
+
+        var result = '';
+
+        if (rule.childs) {
+            var queryStart = "@" + rule.name + " " + rule.params + "{";
+            var queryEnd = "}";
+
+            result =
+                queryStart +
+                rule.childs.map(parseKeyframesBreakpointRule).join('') +
+                queryEnd;
+        }
+
+        result = "module.injectRule('" + result + "');";
+
+        return result;
+    };
+
+    parseKeyframesBreakpointRule = function (breakpoint) {
+        var result = breakpoint.selector + "{";
+
+        if (breakpoint.childs) {
+            for (var i = 0; i < breakpoint.childs.length; i++) {
+                result += breakpoint.childs[i].prop + breakpoint.childs[i].between + breakpoint.childs[i].value + ';';
+            }
+        }
+
+        result += '}';
 
         return result;
     };
