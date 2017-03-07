@@ -16,13 +16,21 @@ if (inputFile && outputFile) {
 
         result = rule.selector + "', '";
 
-        for (var i = 0; i < rule.childs.length; i++) {
-            result += rule.childs[i].prop + rule.childs[i].between + rule.childs[i].value + ';';
-        }
+        result += rule.childs.map(parseDeclaration).join('');
 
         result = "module.insertRule('" + result + "');";
 
         return result;
+    };
+
+    var parseDeclaration = function (child) {
+        if (child.type !=='comment') {
+            var important = child.important ? ' !important': '';
+
+            return child.prop + child.between + child.value + important + ';';
+        } else {
+            return '';
+        }
     };
 
     var parseAtRule = function (rule) {
