@@ -1,14 +1,16 @@
 {
   "name": "cssrules",
   "version": "0.2.0",
-  "description": "Takes a css file as input, tokenizes it and generates CSS rules in a separate JavaScript file",
+  "description": "CSS in JS via the CSSStylesheet API",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/ava",
+    "test-watch": "./node_modules/.bin/ava --watch"
   },
   "author": "Goodvidio",
-  "dependencies": {
-    "postcss": "3.0.4",
-    "underscore": "1.7.0"
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "postcss": "^5.2.16"
   }
 }

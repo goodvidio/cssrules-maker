@@ -1,0 +1,10 @@
+require('./fixtures/selectors');
+require('./fixtures/complexCases');
+require('./fixtures/props');
+require('./fixtures/fontFaces');
+require('./fixtures/import');
+require('./fixtures/charset');
+require('./fixtures/keyframes');
+require('./fixtures/counter-style');
+require('./fixtures/mediaQueries');
+// require('./fixtures/supports');
