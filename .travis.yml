@@ -3,4 +3,4 @@ node_js:
   - '7'
   - '6'
 after_success:
-  - './node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'
+  - 'npm run coverage && ./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'
