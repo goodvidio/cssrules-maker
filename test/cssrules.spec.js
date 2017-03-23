@@ -1,10 +1,12 @@
 require('./fixtures/selectors');
 require('./fixtures/complexCases');
 require('./fixtures/props');
+require('./fixtures/comments');
 require('./fixtures/fontFaces');
 require('./fixtures/import');
 require('./fixtures/charset');
 require('./fixtures/keyframes');
 require('./fixtures/counter-style');
 require('./fixtures/mediaQueries');
+require('./fixtures/unknown');
 // require('./fixtures/supports');

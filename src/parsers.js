@@ -18,7 +18,7 @@ parsers.root = root => {
                 output.push(parsers.atrule(statement));
                 break;
             case 'comment':
-                return '';
+                return;
             default:
                 notSupportedYet(statement.type);
         };
