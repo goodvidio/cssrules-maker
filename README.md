@@ -9,3 +9,37 @@ cssrules
 ## About
 
 CSS in JS via the CSSStylesheet API
+
+## Installation
+
+```shell
+npm install --save cssrules
+```
+
+## Usage
+
+### Example #1
+
+```js
+const cssrules = require('cssrules');
+
+cssrules(`.myrule { color: red; }`)
+  .then(output => {
+      console.log(output);
+  });
+
+```
+
+### Example #2
+
+```js
+const cssrules = require('cssrules');
+const fs = require('fs');
+const path = require('path');
+const myCssFile = fs.readFileSync(path.resolve('./my_file.css', 'utf8');
+
+cssrules(myCssFile)
+  .then(output => {
+      console.log(output);
+  });
+```
