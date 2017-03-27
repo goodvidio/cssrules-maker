@@ -10,6 +10,10 @@ cssrules
 
 CSS in JS via the CSSStylesheet API
 
+## Description
+
+This library takes a CSS string and outputs an Array of Strings that are consumable by the CSSStylesheet API
+
 ## Installation
 
 ```shell

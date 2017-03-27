@@ -1,14 +1,20 @@
 const path = require('path');
-const testWrap = require(path.resolve('./test/helpers/wrap'));
+const test = require('ava');
 
-testWrap(
-    'comment 1',
-    `/* hello world */`,
-    ``
-);
+const cssrules = require(path.resolve('./src/app'));
 
-testWrap(
-    'comment 2',
-    `/* hello world */.a{color: red}`,
-    `module.insertRule('.a{color: red;}');`
-);
+test('comment 1', t => {
+    const actual = `/* hello world */`;
+    const expected = [];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, []));
+});
+
+test('comment 2', t => {
+    const actual = `/* hello world */.a{color: red}`;
+    const expected = ['.a{color: red;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});

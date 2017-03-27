@@ -1,9 +1,10 @@
 const path = require('path');
-const testWrap = require(path.resolve('./test/helpers/wrap'));
+const test = require('ava');
 
-testWrap(
-    'media print 1',
-    `@media print {
+const cssrules = require(path.resolve('./src/app'));
+
+test('media print 1', t => {
+    const actual = `@media print {
         body {
             font-size: 16px;
         }
@@ -11,37 +12,46 @@ testWrap(
         p {
             padding: 1em;
         }
-    }`,
-    `module.insertRule('@media print{body{font-size: 16px;},p{padding: 1em;}}');`
-);
+    }`;
+    const expected = ['@media print{body{font-size: 16px;},p{padding: 1em;}}'];
 
-testWrap(
-    'media list',
-    `@media screen, projection {
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('media list', t => {
+    const actual = `@media screen, projection {
         body {
             font-size: 16px;
         }
-    }`,
-    `module.insertRule('@media screen, projection{body{font-size: 16px;}}');`
-);
+    }`;
+    const expected = ['@media screen, projection{body{font-size: 16px;}}'];
 
-testWrap(
-    'media query 1',
-    `@media screen and (max-device-width: 480px), screen and (max-width: 480px) {
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('media query 1', t => {
+    const actual = `@media screen and (max-device-width: 480px), screen and (max-width: 480px) {
         .a {
             display: block;
         }
-    }`,
-    `module.insertRule('@media screen and (max-device-width: 480px), screen and (max-width: 480px){.a{display: block;}}');`
-);
+    }`;
+    const expected = ['@media screen and (max-device-width: 480px), screen and (max-width: 480px){.a{display: block;}}'];
 
-testWrap(
-    'media query 2',
-    `@media only screen
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('media query 2', t => {
+    const actual = `@media only screen
         and (min-device-width: 320px)
         and (max-device-width: 480px)
         and (-webkit-min-device-pixel-ratio: 2) {
             body { line-height: 1.4 }
-    }`,
-    `module.insertRule('@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2){body{line-height: 1.4;}}');`
-);
+    }`;
+    const expected = ['@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2){body{line-height: 1.4;}}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});

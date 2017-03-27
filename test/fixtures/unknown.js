@@ -1,10 +1,13 @@
 const path = require('path');
-const errorWrap = require(path.resolve('./test/helpers/errors'));
-const unknownRule = require(path.resolve('./src/app'));
+const test = require('ava');
 
-errorWrap(
-    'unknown rule',
-    `asdf{}`,
-    `cannot parse asdf type of rule, visit this url to request this feature:
-https://github.com/goodvidio/cssrules-maker/issues/new`
-);
+const cssrules = require(path.resolve('./src/app'));
+
+test('unknown rule', t => {
+    const actual = `asdf{}`;
+    const expected = `cannot parse asdf type of rule, visit this url to request this feature:
+https://github.com/goodvidio/cssrules-maker/issues/new`;
+
+    return cssrules(actual)
+        .catch(e => t.is(e.message, expected));
+});

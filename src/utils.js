@@ -1,16 +1,5 @@
 const utils = {};
 
-const modulify = {
-    simple: (selector, params) => {
-        const stringified = stringify.simple(selector, params);
-        return `module.insertRule('${stringified}');`;
-    },
-    wrap: (selector, props) => {
-        const stringified = stringify.wrap(selector, props);
-        return `module.insertRule('${stringified}');`;
-    }
-};
-
 const isSimple = function (data) {
     return !!data.params;
 };
@@ -37,7 +26,6 @@ const notSupportedYet = function (feature) {
 };
 
 module.exports = {
-    modulify,
     stringify,
     isSimple,
     notSupportedYet,

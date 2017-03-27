@@ -1,24 +1,30 @@
 const path = require('path');
-const testWrap = require(path.resolve('./test/helpers/wrap'));
+const test = require('ava');
 
-testWrap(
-    'supports 1',
-    `@supports (animation-name: test) {
+const cssrules = require(path.resolve('./src/app'));
+
+test('supports 1', t => {
+    const actual = `@supports (animation-name: test) {
         @keyframes loading {
             0% { top: 0; left: 0; }
             2% { top: 50px; left: 25px; }
             100% { top: 100px; left: 100%; }
         }
-    }`,
-    `module.insertRule('@supports (animation-name: test) {@keyframes loading{0%{top: 0;left: 0;} 2%{top: 50px;left: 25px;} 100%{top: 100px;left: 100%;}}}');`
-);
+    }`;
+    const expected = ['@supports (animation-name: test) {@keyframes loading{0%{top: 0;left: 0;} 2%{top: 50px;left: 25px;} 100%{top: 100px;left: 100%;}}}'];
 
-testWrap(
-    'supports 2',
-    `@supports (--foo: green) {
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('supports 2', t => {
+    const actual = `@supports (--foo: green) {
         body {
             color: green;
         }
-    }`,
-    `module.insertRule('@supports (--foo: green){body{color: green;}}');`
-);
+    }`;
+    const expected = ['@supports (--foo: green){body{color: green;}}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});

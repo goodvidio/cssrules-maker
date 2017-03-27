@@ -1,4 +1,3 @@
-const modulify = require('./utils').modulify;
 const stringify = require('./utils').stringify;
 const cleanupTokens = require('./utils').cleanupTokens;
 const notSupportedYet = require('./utils').notSupportedYet;
@@ -48,8 +47,8 @@ parsers.rules = (rules, joinChar = ',') => {
 };
 
 parsers.declaration = declaration => {
-    if (declaration.type !=='comment') {
-        const important = declaration.important ? ' !important': '';
+    if (declaration.type !== 'comment') {
+        const important = declaration.important ? ' !important' : '';
 
         return `${declaration.prop}: ${declaration.value}${important};`;
     } else {
@@ -148,19 +147,19 @@ parsers.keyframes = atrule => {
 parsers.atrule = function (atrule) {
     switch (atrule.name) {
         case 'font-face':
-           return parsers.fontFace(atrule);
+            return parsers.fontFace(atrule);
         case 'media':
-           return parsers.media(atrule);
+            return parsers.media(atrule);
         case 'import':
-           return parsers.import(atrule);
+            return parsers.import(atrule);
         case 'charset':
-           return parsers.charset(atrule);
+            return parsers.charset(atrule);
         case 'keyframes':
-           return parsers.keyframes(atrule);
+            return parsers.keyframes(atrule);
         case 'counter-style':
-           return parsers.counterStyle(atrule);
-       // case 'supports':
-       //    return parsers.supports(atrule);
+            return parsers.counterStyle(atrule);
+        // case 'supports':
+        //    return parsers.supports(atrule);
         default:
             notSupportedYet(atrule.name);
     }

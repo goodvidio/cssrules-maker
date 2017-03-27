@@ -1,38 +1,52 @@
 const path = require('path');
-const testWrap = require(path.resolve('./test/helpers/wrap'));
+const test = require('ava');
 
-testWrap(
-    'import css file',
-    `@import 'custom.css';`,
-    `module.insertRule('@import 'custom.css';');`
-);
+const cssrules = require(path.resolve('./src/app'));
 
-testWrap(
-    'import url print',
-    `@import url("fineprint.css") print;`,
-    `module.insertRule('@import url("fineprint.css") print;');`
-);
+test('import css file', t => {
+    const actual = `@import 'custom.css';`;
+    const expected = [`@import 'custom.css';`];
 
-testWrap(
-    'import chrome:// urls',
-    `@import url("chrome://communicator/skin/");`,
-    `module.insertRule('@import url("chrome://communicator/skin/");');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'complex import 1',
-    `@import url("bluish.css") projection, tv;`,
-    `module.insertRule('@import url("bluish.css") projection, tv;');`
-);
+test('import url print', t => {
+    const actual = `@import url("fineprint.css") print;`;
+    const expected = [`@import url("fineprint.css") print;`];
 
-testWrap(
-    'complex import 2',
-    `@import "common.css" screen, projection;`,
-    `module.insertRule('@import "common.css" screen, projection;');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'complex import 3',
-    `@import url('landscape.css') screen and (orientation:landscape);`,
-    `module.insertRule('@import url('landscape.css') screen and (orientation:landscape);');`
-);
+test('import chrome:// urls', t => {
+    const actual = `@import url("chrome://communicator/skin/");`;
+    const expected = [`@import url("chrome://communicator/skin/");`];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('complex import 1', t => {
+    const actual = `@import url("bluish.css") projection, tv;`;
+    const expected = [`@import url("bluish.css") projection, tv;`];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('complex import 2', t => {
+    const actual = `@import "common.css" screen, projection;`;
+    const expected = [`@import "common.css" screen, projection;`];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('complex import 3', t => {
+    const actual = `@import url('landscape.css') screen and (orientation:landscape);`;
+    const expected = [`@import url('landscape.css') screen and (orientation:landscape);`];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});

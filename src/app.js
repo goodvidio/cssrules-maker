@@ -1,6 +1,6 @@
 const postcss = require('postcss');
 const parsers = require('./parsers');
-const modulify = require('./utils').modulify;
+const stringify = require('./utils').stringify;
 const isSimple = require('./utils').isSimple;
 
 const cssrules = (css) => {
@@ -12,18 +12,17 @@ const cssrules = (css) => {
                 .map(data => {
 
                     if (isSimple(data)) {
-                        return modulify.simple(
+                        return stringify.simple(
                             data.selector,
                             data.params
                         );
                     } else {
-                        return modulify.wrap(
+                        return stringify.wrap(
                             data.selector,
                             data.props || data.rules
                         );
                     }
-                })
-                .join('\n');
+                });
         });
 };
 

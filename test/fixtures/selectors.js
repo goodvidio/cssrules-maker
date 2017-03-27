@@ -1,183 +1,243 @@
 const path = require('path');
-const testWrap = require(path.resolve('./test/helpers/wrap'));
+const test = require('ava');
 
-testWrap(
-    'single class',
-    `.a { color: blue; }`,
-    `module.insertRule('.a{color: blue;}');`
-);
+const cssrules = require(path.resolve('./src/app'));
+test('single class', t => {
+    const actual = `.a { color: blue; }`;
+    const expected = ['.a{color: blue;}'];
 
-testWrap(
-    'coma separated classes',
-    `.b, .c { color: red; }`,
-    `module.insertRule('.b, .c{color: red;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'single id',
-    `#a { color: red; }`,
-    `module.insertRule('#a{color: red;}');`
-);
+test('coma separated classes', t => {
+    const actual = `.b, .c { color: red; }`;
+    const expected = ['.b, .c{color: red;}'];
 
-testWrap(
-    'coma separated ids',
-    `#b, #c { color: red; }`,
-    `module.insertRule('#b, #c{color: red;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'id and class',
-    `#b .a { color: red; }`,
-    `module.insertRule('#b .a{color: red;}');`
-);testWrap(
-    '[dir="rtl"]',
-    `#a [dir="rtl"] .b {float: right}`,
-    `module.insertRule('#a [dir="rtl"] .b{float: right;}');`
-);
+test('single id', t => {
+    const actual = `#a { color: red; }`;
+    const expected = ['#a{color: red;}'];
 
-testWrap(
-    'type selector',
-    `form input { color: blue; }`,
-    `module.insertRule('form input{color: blue;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'universal selector',
-    `* { color: blue; }`,
-    `module.insertRule('*{color: blue;}');`
-);
+test('coma separated ids', t => {
+    const actual = `#b, #c { color: red; }`;
+    const expected = ['#b, #c{color: red;}'];
 
-testWrap(
-    'id and universal selector',
-    `#el * { color: blue; }`,
-    `module.insertRule('#el *{color: blue;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('id and class', t => {
+    const actual = `#b .a { color: red; }`;
+    const expected = ['#b .a{color: red;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('[dir="rtl"]', t => {
+    const actual = `#a [dir="rtl"] .b {float: right}`;
+    const expected = ['#a [dir="rtl"] .b{float: right;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('type selector', t => {
+    const actual = `form input { color: blue; }`;
+    const expected = ['form input{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('universal selector', t => {
+    const actual = `* { color: blue; }`;
+    const expected = ['*{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('id and universal selector', t => {
+    const actual = `#el * { color: blue; }`;
+    const expected = ['#el *{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
 // Attribute selectors
 
-    testWrap(
-        '[attr] selector',
-        `[attr] { color: blue; }`,
-        `module.insertRule('[attr]{color: blue;}');`
-    );
+test('[attr] selector', t => {
+    const actual = `[attr] { color: blue; }`;
+    const expected = ['[attr]{color: blue;}'];
 
-    testWrap(
-        '[attr=val] selector',
-        `[attr=val] { color: blue; }`,
-        `module.insertRule('[attr=val]{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        '[attr~=val] selector',
-        `[attr~=val] { color: blue; }`,
-        `module.insertRule('[attr~=val]{color: blue;}');`
-    );
+test('[attr=val] selector', t => {
+    const actual = `[attr=val] { color: blue; }`;
+    const expected = ['[attr=val]{color: blue;}'];
 
-    testWrap(
-        '[attr|=val] selector',
-        `[attr|=val] { color: blue; }`,
-        `module.insertRule('[attr|=val]{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        '[attr^=val] selector',
-        `[attr^=val] { color: blue; }`,
-        `module.insertRule('[attr^=val]{color: blue;}');`
-    );
+test('[attr~=val] selector', t => {
+    const actual = `[attr~=val] { color: blue; }`;
+    const expected = ['[attr~=val]{color: blue;}'];
 
-    testWrap(
-        '[attr$=val] selector',
-        `[attr$=val] { color: blue; }`,
-        `module.insertRule('[attr$=val]{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        '[attr*=val] selector',
-        `[attr*=val] { color: blue; }`,
-        `module.insertRule('[attr*=val]{color: blue;}');`
-    );
+test('[attr|=val] selector', t => {
+    const actual = `[attr|=val] { color: blue; }`;
+    const expected = ['[attr|=val]{color: blue;}'];
 
-    testWrap(
-        '[attr i] case insensitive selector',
-        `[attr i] { color: blue; }`,
-        `module.insertRule('[attr i]{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('[attr^=val] selector', t => {
+    const actual = `[attr^=val] { color: blue; }`;
+    const expected = ['[attr^=val]{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('[attr$=val] selector', t => {
+    const actual = `[attr$=val] { color: blue; }`;
+    const expected = ['[attr$=val]{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('[attr*=val] selector', t => {
+    const actual = `[attr*=val] { color: blue; }`;
+    const expected = ['[attr*=val]{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('[attr i] case insensitive selector', t => {
+    const actual = `[attr i] { color: blue; }`;
+    const expected = ['[attr i]{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
 // Sibling selectors
 
-testWrap(
-    'Adjacent sibling selector',
-    `div + p { color: blue; }`,
-    `module.insertRule('div + p{color: blue;}');`
-);
+test('Adjacent sibling selector', t => {
+    const actual = `div + p { color: blue; }`;
+    const expected = ['div + p{color: blue;}'];
 
-testWrap(
-    'General sibling selector',
-    `div ~ p { color: blue; }`,
-    `module.insertRule('div ~ p{color: blue;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-testWrap(
-    'Child selector',
-    `div > p { color: blue; }`,
-    `module.insertRule('div > p{color: blue;}');`
-);
+test('General sibling selector', t => {
+    const actual = `div ~ p { color: blue; }`;
+    const expected = ['div ~ p{color: blue;}'];
 
-testWrap(
-    'Descendant selector',
-    `div > p { color: blue; }`,
-    `module.insertRule('div > p{color: blue;}');`
-);
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('Child selector', t => {
+    const actual = `div > p { color: blue; }`;
+    const expected = ['div > p{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('Descendant selector', t => {
+    const actual = `div > p { color: blue; }`;
+    const expected = ['div > p{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
 // Pseudo element selectors
 
-    testWrap(
-        'before pseudo-element (CSS3 syntax)',
-        `.a::before { color: blue; }`,
-        `module.insertRule('.a::before{color: blue;}');`
-    );
+test('before pseudo-element (CSS3 syntax)', t => {
+    const actual = `.a::before { color: blue; }`;
+    const expected = ['.a::before{color: blue;}'];
 
-    testWrap(
-        'after pseudo-element (CSS3 syntax)',
-        `.a::after { color: blue; }`,
-        `module.insertRule('.a::after{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        'before pseudo-element (CSS3 syntax) with content',
-        `.a::before { content: ""; color: blue; }`,
-        `module.insertRule('.a::before{content: "";color: blue;}');`
-    );
+test('after pseudo-element (CSS3 syntax)', t => {
+    const actual = `.a::after { color: blue; }`;
+    const expected = ['.a::after{color: blue;}'];
 
-    testWrap(
-        'after pseudo-element (CSS3 syntax) with content',
-        `.a::after { content: ""; color: blue; }`,
-        `module.insertRule('.a::after{content: "";color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        'before pseudo-element (CSS2 syntax)',
-        `.a:before { color: blue; }`,
-        `module.insertRule('.a:before{color: blue;}');`
-    );
+test('before pseudo-element (CSS3 syntax) with content', t => {
+    const actual = `.a::before { content: ""; color: blue; }`;
+    const expected = ['.a::before{content: "";color: blue;}'];
 
-    testWrap(
-        'after pseudo-element (CSS2 syntax)',
-        `.a:after { color: blue; }`,
-        `module.insertRule('.a:after{color: blue;}');`
-    );
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('after pseudo-element (CSS3 syntax) with content', t => {
+    const actual = `.a::after { content: ""; color: blue; }`;
+    const expected = ['.a::after{content: "";color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('before pseudo-element (CSS2 syntax)', t => {
+    const actual = `.a:before { color: blue; }`;
+    const expected = ['.a:before{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
+
+test('after pseudo-element (CSS2 syntax)', t => {
+    const actual = `.a:after { color: blue; }`;
+    const expected = ['.a:after{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
 // Pseudo class selectors
 
-    testWrap(
-        ':active pseudo class selector',
-        `a:active { color: blue; }`,
-        `module.insertRule('a:active{color: blue;}');`
-    );
+test(':active pseudo class selector', t => {
+    const actual = `a:active { color: blue; }`;
+    const expected = ['a:active{color: blue;}'];
 
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
 
-    testWrap(
-        ':checked pseudo class selector',
-        `input:checked { color: blue; }`,
-        `module.insertRule('input:checked{color: blue;}');`
-    );
+test(':checked pseudo class selector', t => {
+    const actual = `input:checked { color: blue; }`;
+    const expected = ['input:checked{color: blue;}'];
+
+    return cssrules(actual)
+        .then(result => t.deepEqual(result, expected));
+});
