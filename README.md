@@ -40,7 +40,7 @@ cssrules(`.myrule { color: red; }`)
 const cssrules = require('cssrules');
 const fs = require('fs');
 const path = require('path');
-const myCssFile = fs.readFileSync(path.resolve('./my_file.css', 'utf8');
+const myCssFile = fs.readFileSync(path.resolve('./my_file.css', 'utf8'));
 
 cssrules(myCssFile)
   .then(output => {
