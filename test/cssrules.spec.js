@@ -9,4 +9,5 @@ require('./fixtures/keyframes');
 require('./fixtures/counter-style');
 require('./fixtures/mediaQueries');
 require('./fixtures/unknown');
+require('./fixtures/unsupported');
 // require('./fixtures/supports');

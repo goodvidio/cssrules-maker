@@ -18,6 +18,8 @@ parsers.root = root => {
                 break;
             case 'comment':
                 return;
+            case 'decl':
+                return;
             default:
                 notSupportedYet(statement.type);
         };
