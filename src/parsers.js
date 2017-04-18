@@ -147,23 +147,20 @@ parsers.keyframes = atrule => {
 // };
 
 parsers.atrule = function (atrule) {
-    switch (atrule.name) {
-        case 'font-face':
-            return parsers.fontFace(atrule);
-        case 'media':
-            return parsers.media(atrule);
-        case 'import':
-            return parsers.import(atrule);
-        case 'charset':
-            return parsers.charset(atrule);
-        case 'keyframes':
-            return parsers.keyframes(atrule);
-        case 'counter-style':
-            return parsers.counterStyle(atrule);
-        // case 'supports':
-        //    return parsers.supports(atrule);
-        default:
-            notSupportedYet(atrule.name);
+    if (atrule.name === 'font-face') {
+        return parsers.fontFace(atrule);
+    } else if (atrule.name === 'media') {
+        return parsers.media(atrule);
+    } else if (atrule.name === 'import') {
+        return parsers.import(atrule);
+    } else if (atrule.name === 'charset') {
+        return parsers.charset(atrule);
+    } else if (atrule.name.indexOf('keyframes') > -1) {
+        return parsers.keyframes(atrule);
+    } else if (atrule.name === 'counter-style') {
+        return parsers.counterStyle(atrule);
+    } else {
+        notSupportedYet(atrule.name);
     }
 };
 
