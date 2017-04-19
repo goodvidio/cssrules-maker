@@ -47,3 +47,7 @@ cssrules(myCssFile)
       console.log(output);
   });
 ```
+
+## Integrations
+
+* webpack via [cssrules-loader](https://github.com/goodvidio/cssrules-loader)
