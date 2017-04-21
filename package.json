@@ -10,11 +10,11 @@
   "author": "Goodvidio",
   "license": "MIT",
   "dependencies": {
-    "postcss": "^5.2.16"
+    "postcss": "5.2.16"
   },
   "devDependencies": {
-    "ava": "^0.18.2",
-    "coveralls": "^2.12.0",
-    "nyc": "^10.1.2"
+    "ava": "0.18.2",
+    "coveralls": "2.12.0",
+    "nyc": "10.1.2"
   }
 }
